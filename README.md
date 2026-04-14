@@ -1,6 +1,6 @@
 # WebLayouts
 
-# A showcase of modern, responsive web architectures built with semantic HTML and advanced CSS techniques. This collection focuses on UI/UX precision, mobile-first design, and clean code structures, transforming static concepts into high-performance digital layouts for modern startup needs.
+A showcase of modern, responsive web architectures built with semantic HTML and advanced CSS techniques. This collection focuses on UI/UX precision, mobile-first design, and clean code structures, transforming static concepts into high-performance digital layouts for modern startup needs.
 
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white)
