@@ -67,5 +67,3 @@ Each folder is fully independent. Assets, styles, and scripts are either inline 
 ## 📄 License
 
 MIT - see [`LICENSE`](./LICENSE) for details.
-
-> > > > > > > 26cc069 (Update README with detailed project overview and repository structure)
