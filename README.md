@@ -24,9 +24,9 @@ A showcase of modern, responsive web architectures built with semantic HTML and 
 
 ## 🚀 Projects Overview
 
-| #   | Project                  | Stack        | Description                                                                                                                                                                              | Folder                               | Live           |
-| --- | ------------------------ | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ | -------------- |
-| 1   | Spotify Web Player Clone | HTML5 · CSS3 | Pixel-accurate Spotify UI clone featuring a pure CSS state engine for interactive playback toggles, volume muting, and library navigation zero frameworks, zero JavaScript, single file. | [`Spotify-Clone/`](./Spotify-Clone/) | [View Live](#) |
+| #   | Project                  | Stack        | Description                                                                                                                                                                              | Folder                               |
+| --- | ------------------------ | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ |
+| 1   | Spotify Web Player Clone | HTML5 · CSS3 | Pixel-accurate Spotify UI clone featuring a pure CSS state engine for interactive playback toggles, volume muting, and library navigation zero frameworks, zero JavaScript, single file. | [`Spotify-Clone/`](./Spotify-Clone/) |
 
 ---
 
