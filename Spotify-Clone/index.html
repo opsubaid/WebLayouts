@@ -1,0 +1,1567 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="./assets/favicon.png" type="image/png" />
+    <title>Spotify - Web Player: Music for everyone</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Player toggles -->
+    <input type="checkbox" id="play-toggle" class="state-input" />
+    <input type="checkbox" id="like-toggle" class="state-input" />
+    <input type="checkbox" id="shuffle-toggle" class="state-input" />
+    <input type="checkbox" id="repeat-toggle" class="state-input" />
+    <input type="checkbox" id="mute-toggle" class="state-input" />
+    <input type="checkbox" id="pip-toggle" class="state-input" />
+    <input type="checkbox" id="nav-bars" class="state-input" />
+    <input type="checkbox" id="nav-mic" class="state-input" />
+    <input type="checkbox" id="nav-queue" class="state-input" />
+    <input type="checkbox" id="nav-device" class="state-input" />
+    <input type="checkbox" id="nav-fs" class="state-input" />
+
+    <!-- Content filter pills -->
+    <input
+      type="radio"
+      name="content-filter"
+      id="cf-all"
+      class="state-input"
+      checked
+    />
+    <input
+      type="radio"
+      name="content-filter"
+      id="cf-music"
+      class="state-input"
+    />
+    <input
+      type="radio"
+      name="content-filter"
+      id="cf-podcasts"
+      class="state-input"
+    />
+    <input
+      type="radio"
+      name="content-filter"
+      id="cf-audiobooks"
+      class="state-input"
+    />
+
+    <!-- Library filter chips -->
+    <input
+      type="radio"
+      name="lib-filter"
+      id="lf-playlists"
+      class="state-input"
+      checked
+    />
+    <input type="radio" name="lib-filter" id="lf-albums" class="state-input" />
+    <input type="radio" name="lib-filter" id="lf-artists" class="state-input" />
+    <input
+      type="radio"
+      name="lib-filter"
+      id="lf-podcasts-chip"
+      class="state-input"
+    />
+
+    <!-- Sidebar nav -->
+    <input
+      type="radio"
+      name="sidebar-nav"
+      id="sn-home"
+      class="state-input"
+      checked
+    />
+    <input type="radio" name="sidebar-nav" id="sn-search" class="state-input" />
+
+    <!-- Mobile nav -->
+    <input
+      type="radio"
+      name="mob-nav"
+      id="mn-home"
+      class="state-input"
+      checked
+    />
+    <input type="radio" name="mob-nav" id="mn-search" class="state-input" />
+    <input type="radio" name="mob-nav" id="mn-library" class="state-input" />
+
+    <!-- Library item selection (MUST come after #play-toggle for eq-anim selectors) -->
+    <input
+      type="radio"
+      name="lib-item"
+      id="li-liked"
+      class="state-input"
+      checked
+    />
+    <input type="radio" name="lib-item" id="li-dm1" class="state-input" />
+    <input type="radio" name="lib-item" id="li-discover" class="state-input" />
+    <input type="radio" name="lib-item" id="li-topsongs" class="state-input" />
+    <input type="radio" name="lib-item" id="li-chill" class="state-input" />
+    <input type="radio" name="lib-item" id="li-latenight" class="state-input" />
+    <input type="radio" name="lib-item" id="li-workout" class="state-input" />
+    <input type="radio" name="lib-item" id="li-study" class="state-input" />
+    <input type="radio" name="lib-item" id="li-rapcaviar" class="state-input" />
+    <input type="radio" name="lib-item" id="li-bossanova" class="state-input" />
+    <input type="radio" name="lib-item" id="li-jazz" class="state-input" />
+
+    <!-- ================================================================ -->
+
+    <div class="app">
+      <!-- ======== APP BODY ======== -->
+      <div class="app-body">
+        <!-- ======== SIDEBAR ======== -->
+        <aside class="sidebar">
+          <!-- Nav section -->
+          <div class="sidebar-nav">
+            <a href="#" class="spotify-logo">
+              <i class="fa-brands fa-spotify"></i>
+              <span class="logo-text">Spotify</span>
+            </a>
+            <label for="sn-home" class="nav-link">
+              <i class="fa-solid fa-house"></i>
+              <span>Home</span>
+            </label>
+            <label for="sn-search" class="nav-link">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <span>Search</span>
+            </label>
+          </div>
+
+          <!-- Library section -->
+          <div class="sidebar-library">
+            <div class="library-header">
+              <button class="library-title">
+                <i class="fa-solid fa-layer-group"></i>
+                <span>Your Library</span>
+              </button>
+              <div class="lib-header-btns">
+                <button class="lib-icon-btn" title="Create playlist or folder">
+                  <i class="fa-solid fa-plus"></i>
+                </button>
+                <button class="lib-icon-btn" title="Expand Library">
+                  <i class="fa-solid fa-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="library-filters">
+              <label for="lf-playlists" class="filter-chip">Playlists</label>
+              <label for="lf-albums" class="filter-chip">Albums</label>
+              <label for="lf-artists" class="filter-chip">Artists</label>
+              <label for="lf-podcasts-chip" class="filter-chip">Podcasts</label>
+            </div>
+
+            <div class="library-search-row">
+              <button class="lib-search-btn" title="Search in Your Library">
+                <i class="fa-solid fa-magnifying-glass"></i>
+              </button>
+              <button class="lib-sort-btn">
+                Recents <i class="fa-solid fa-list"></i>
+              </button>
+            </div>
+
+            <div class="library-list">
+              <!-- Liked Songs -->
+              <label for="li-liked" class="lib-item">
+                <div class="lib-thumb liked-grad">
+                  <i class="fa-solid fa-heart"></i>
+                </div>
+                <div class="lib-item-info">
+                  <span class="lib-item-name">Liked Songs</span>
+                  <span class="lib-item-meta">Playlist · 430 songs</span>
+                </div>
+                <div class="lib-item-right">
+                  <div class="eq-anim">
+                    <span></span><span></span><span></span>
+                  </div>
+                </div>
+              </label>
+
+              <!-- Daily Mix 1 -->
+              <label for="li-dm1" class="lib-item">
+                <img
+                  class="lib-thumb"
+                  src="https://images.pexels.com/photos/3747468/pexels-photo-3747468.jpeg?auto=compress&cs=tinysrgb&w=48&h=48&fit=crop"
+                  alt="Daily Mix 1"
+                />
+                <div class="lib-item-info">
+                  <span class="lib-item-name">Daily Mix 1</span>
+                  <span class="lib-item-meta">Daily Mix · Spotify</span>
+                </div>
+                <div class="lib-item-right">
+                  <div class="eq-anim">
+                    <span></span><span></span><span></span>
+                  </div>
+                </div>
+              </label>
+
+              <!-- Discover Weekly -->
+              <label for="li-discover" class="lib-item">
+                <img
+                  class="lib-thumb"
+                  src="https://images.pexels.com/photos/167636/pexels-photo-167636.jpeg?auto=compress&cs=tinysrgb&w=48&h=48&fit=crop"
+                  alt="Discover Weekly"
+                />
+                <div class="lib-item-info">
+                  <span class="lib-item-name">Discover Weekly</span>
+                  <span class="lib-item-meta">Playlist · Spotify</span>
+                </div>
+                <div class="lib-item-right">
+                  <div class="eq-anim">
+                    <span></span><span></span><span></span>
+                  </div>
+                </div>
+              </label>
+
+              <!-- Top Songs 2024 -->
+              <label for="li-topsongs" class="lib-item">
+                <img
+                  class="lib-thumb"
+                  src="https://images.pexels.com/photos/1190297/pexels-photo-1190297.jpeg?auto=compress&cs=tinysrgb&w=48&h=48&fit=crop"
+                  alt="Top Songs 2024"
+                />
+                <div class="lib-item-info">
+                  <span class="lib-item-name">Your Top Songs 2024</span>
+                  <span class="lib-item-meta">Playlist · Spotify</span>
+                </div>
+                <div class="lib-item-right">
+                  <div class="eq-anim">
+                    <span></span><span></span><span></span>
+                  </div>
+                </div>
+              </label>
+
+              <!-- Chill Vibes -->
+              <label for="li-chill" class="lib-item">
+                <img
+                  class="lib-thumb"
+                  src="https://images.pexels.com/photos/3560044/pexels-photo-3560044.jpeg?auto=compress&cs=tinysrgb&w=48&h=48&fit=crop"
+                  alt="Chill Vibes"
+                />
+                <div class="lib-item-info">
+                  <span class="lib-item-name">Chill Vibes</span>
+                  <span class="lib-item-meta">Playlist · Made by you</span>
+                </div>
+                <div class="lib-item-right">
+                  <div class="eq-anim">
+                    <span></span><span></span><span></span>
+                  </div>
+                </div>
+              </label>
+
+              <!-- Late Night Driving -->
+              <label for="li-latenight" class="lib-item">
+                <img
+                  class="lib-thumb"
+                  src="https://images.pexels.com/photos/210764/pexels-photo-210764.jpeg?auto=compress&cs=tinysrgb&w=48&h=48&fit=crop"
+                  alt="Late Night Driving"
+                />
+                <div class="lib-item-info">
+                  <span class="lib-item-name">Late Night Driving</span>
+                  <span class="lib-item-meta">Playlist · Made by you</span>
+                </div>
+                <div class="lib-item-right">
+                  <div class="eq-anim">
+                    <span></span><span></span><span></span>
+                  </div>
+                </div>
+              </label>
+
+              <!-- Workout Bangers -->
+              <label for="li-workout" class="lib-item">
+                <img
+                  class="lib-thumb"
+                  src="https://images.pexels.com/photos/841130/pexels-photo-841130.jpeg?auto=compress&cs=tinysrgb&w=48&h=48&fit=crop"
+                  alt="Workout Bangers"
+                />
+                <div class="lib-item-info">
+                  <span class="lib-item-name">Workout Bangers</span>
+                  <span class="lib-item-meta">Playlist · Made by you</span>
+                </div>
+                <div class="lib-item-right">
+                  <div class="eq-anim">
+                    <span></span><span></span><span></span>
+                  </div>
+                </div>
+              </label>
+
+              <!-- Study Beats -->
+              <label for="li-study" class="lib-item">
+                <img
+                  class="lib-thumb"
+                  src="https://images.pexels.com/photos/4050312/pexels-photo-4050312.jpeg?auto=compress&cs=tinysrgb&w=48&h=48&fit=crop"
+                  alt="Study Beats"
+                />
+                <div class="lib-item-info">
+                  <span class="lib-item-name">Study Beats</span>
+                  <span class="lib-item-meta">Playlist · Made by you</span>
+                </div>
+                <div class="lib-item-right">
+                  <div class="eq-anim">
+                    <span></span><span></span><span></span>
+                  </div>
+                </div>
+              </label>
+
+              <!-- Rap Caviar -->
+              <label for="li-rapcaviar" class="lib-item">
+                <img
+                  class="lib-thumb"
+                  src="https://images.pexels.com/photos/164745/pexels-photo-164745.jpeg?auto=compress&cs=tinysrgb&w=48&h=48&fit=crop"
+                  alt="Rap Caviar"
+                />
+                <div class="lib-item-info">
+                  <span class="lib-item-name">Rap Caviar</span>
+                  <span class="lib-item-meta">Playlist · Spotify</span>
+                </div>
+                <div class="lib-item-right">
+                  <div class="eq-anim">
+                    <span></span><span></span><span></span>
+                  </div>
+                </div>
+              </label>
+
+              <!-- Bossa Nova Chill -->
+              <label for="li-bossanova" class="lib-item">
+                <img
+                  class="lib-thumb"
+                  src="https://images.pexels.com/photos/2531728/pexels-photo-2531728.jpeg?auto=compress&cs=tinysrgb&w=48&h=48&fit=crop"
+                  alt="Bossa Nova Chill"
+                />
+                <div class="lib-item-info">
+                  <span class="lib-item-name">Bossa Nova Chill</span>
+                  <span class="lib-item-meta">Playlist · Made by you</span>
+                </div>
+                <div class="lib-item-right">
+                  <div class="eq-anim">
+                    <span></span><span></span><span></span>
+                  </div>
+                </div>
+              </label>
+
+              <!-- Jazz Classics -->
+              <label for="li-jazz" class="lib-item">
+                <img
+                  class="lib-thumb"
+                  src="https://images.pexels.com/photos/2147029/pexels-photo-2147029.jpeg?auto=compress&cs=tinysrgb&w=48&h=48&fit=crop"
+                  alt="Jazz Classics"
+                />
+                <div class="lib-item-info">
+                  <span class="lib-item-name">Jazz Classics</span>
+                  <span class="lib-item-meta">Playlist · Spotify</span>
+                </div>
+                <div class="lib-item-right">
+                  <div class="eq-anim">
+                    <span></span><span></span><span></span>
+                  </div>
+                </div>
+              </label>
+            </div>
+          </div>
+        </aside>
+        <!-- /SIDEBAR -->
+
+        <!-- ======== MAIN CONTENT ======== -->
+        <main class="main">
+          <div class="main-gradient"></div>
+
+          <!-- Top Bar -->
+          <div class="top-bar">
+            <div class="top-bar-left">
+              <button class="nav-arrow-btn" disabled title="Go back">
+                <i class="fa-solid fa-chevron-left"></i>
+              </button>
+              <button class="nav-arrow-btn" title="Go forward">
+                <i class="fa-solid fa-chevron-right"></i>
+              </button>
+            </div>
+            <div class="top-bar-right">
+              <button class="premium-btn">Explore Premium</button>
+              <button class="install-btn">
+                <i class="fa-solid fa-arrow-down-to-bracket"></i>
+                <span>Install App</span>
+              </button>
+              <div class="user-menu">
+                <div class="user-avatar">U</div>
+                <span class="user-name">User</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Scrollable Content -->
+          <div class="content-area">
+            <!-- Content Filter Pills -->
+            <div class="content-filters">
+              <label for="cf-all" class="content-pill">All</label>
+              <label for="cf-music" class="content-pill">Music</label>
+              <label for="cf-podcasts" class="content-pill"
+                >Podcasts &amp; Shows</label
+              >
+              <label for="cf-audiobooks" class="content-pill">Audiobooks</label>
+            </div>
+
+            <!-- Greeting + Shortcuts -->
+            <div class="greeting-section">
+              <h2>Good evening</h2>
+              <div class="shortcuts-grid">
+                <div class="shortcut-item">
+                  <div class="sc-thumb sc-liked">
+                    <i class="fa-solid fa-heart"></i>
+                  </div>
+                  <span class="sc-name">Liked Songs</span>
+                  <button class="sc-play">
+                    <i class="fa-solid fa-play"></i>
+                  </button>
+                </div>
+
+                <div class="shortcut-item">
+                  <img
+                    class="sc-thumb"
+                    src="https://images.pexels.com/photos/3747468/pexels-photo-3747468.jpeg?auto=compress&cs=tinysrgb&w=64&h=64&fit=crop"
+                    alt="Daily Mix 1"
+                  />
+                  <span class="sc-name">Daily Mix 1</span>
+                  <button class="sc-play">
+                    <i class="fa-solid fa-play"></i>
+                  </button>
+                </div>
+
+                <div class="shortcut-item">
+                  <img
+                    class="sc-thumb"
+                    src="https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=64&h=64&fit=crop"
+                    alt="Top 50 Global"
+                  />
+                  <span class="sc-name">Top 50 - Global</span>
+                  <button class="sc-play">
+                    <i class="fa-solid fa-play"></i>
+                  </button>
+                </div>
+
+                <div class="shortcut-item">
+                  <img
+                    class="sc-thumb"
+                    src="https://images.pexels.com/photos/167636/pexels-photo-167636.jpeg?auto=compress&cs=tinysrgb&w=64&h=64&fit=crop"
+                    alt="Discover Weekly"
+                  />
+                  <span class="sc-name">Discover Weekly</span>
+                  <button class="sc-play">
+                    <i class="fa-solid fa-play"></i>
+                  </button>
+                </div>
+
+                <div class="shortcut-item">
+                  <img
+                    class="sc-thumb"
+                    src="https://images.pexels.com/photos/3560044/pexels-photo-3560044.jpeg?auto=compress&cs=tinysrgb&w=64&h=64&fit=crop"
+                    alt="Chill Vibes"
+                  />
+                  <span class="sc-name">Chill Vibes</span>
+                  <button class="sc-play">
+                    <i class="fa-solid fa-play"></i>
+                  </button>
+                </div>
+
+                <div class="shortcut-item">
+                  <img
+                    class="sc-thumb"
+                    src="https://images.pexels.com/photos/164745/pexels-photo-164745.jpeg?auto=compress&cs=tinysrgb&w=64&h=64&fit=crop"
+                    alt="Rap Caviar"
+                  />
+                  <span class="sc-name">Rap Caviar</span>
+                  <button class="sc-play">
+                    <i class="fa-solid fa-play"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- /Greeting -->
+
+            <!-- ===================== SECTION 1: TRENDING NOW ===================== -->
+            <section class="music-section">
+              <div class="section-header">
+                <h2>Trending Now</h2>
+                <a href="#" class="show-all">Show all</a>
+              </div>
+              <div class="cards-row">
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="Top 50 Global"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">Top 50 - Global</p>
+                  <p class="card-desc">
+                    Your daily update of the most played tracks right now
+                  </p>
+                </div>
+
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/1763075/pexels-photo-1763075.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="Viral 50 USA"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">Viral 50 - USA</p>
+                  <p class="card-desc">
+                    Songs blowing up across every social media platform
+                  </p>
+                </div>
+
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/257904/pexels-photo-257904.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="Today's Top Hits"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">Today's Top Hits</p>
+                  <p class="card-desc">
+                    The most popular songs in the world right now
+                  </p>
+                </div>
+
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/164745/pexels-photo-164745.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="Rap Caviar"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">Rap Caviar</p>
+                  <p class="card-desc">
+                    Music that defines culture. Cover: Drake
+                  </p>
+                </div>
+
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/144429/pexels-photo-144429.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="Hot Country"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">Hot Country</p>
+                  <p class="card-desc">
+                    Today's top country hits and rising stars
+                  </p>
+                </div>
+
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/1190297/pexels-photo-1190297.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="Pop Rising"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">Pop Rising</p>
+                  <p class="card-desc">The next generation of pop superstars</p>
+                </div>
+
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/1619697/pexels-photo-1619697.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="Baila Reggaeton"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">Baila Reggaeton</p>
+                  <p class="card-desc">
+                    The rhythm that's taking over the world
+                  </p>
+                </div>
+
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/167636/pexels-photo-167636.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="New Music Friday"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">New Music Friday</p>
+                  <p class="card-desc">All the best new music, one playlist</p>
+                </div>
+              </div>
+            </section>
+
+            <!-- ===================== SECTION 2: DEEP FOCUS ===================== -->
+            <section class="music-section">
+              <div class="section-header">
+                <h2>Deep Focus</h2>
+                <a href="#" class="show-all">Show all</a>
+              </div>
+              <div class="cards-row">
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/3747468/pexels-photo-3747468.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="Lofi Garden"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">Lofi Garden</p>
+                  <p class="card-desc">
+                    Cozy beats to keep your productivity high all day
+                  </p>
+                </div>
+
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/32921115/pexels-photo-32921115.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="Ambient Piano"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">Ambient Piano</p>
+                  <p class="card-desc">
+                    Peaceful piano keys for deep work and concentration
+                  </p>
+                </div>
+
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="Study Session"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">Study Session</p>
+                  <p class="card-desc">
+                    Focus-enhancing instrumentals for long sessions
+                  </p>
+                </div>
+
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/8168564/pexels-photo-8168564.png?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="White Noise"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">White Noise &amp; Static</p>
+                  <p class="card-desc">
+                    Block out the world with pure sonic static
+                  </p>
+                </div>
+
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/3771069/pexels-photo-3771069.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="Brain Food"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">Brain Food</p>
+                  <p class="card-desc">
+                    Mind-sharpening music for deep thinking
+                  </p>
+                </div>
+
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/11081500/pexels-photo-11081500.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="Heavy Rain"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">Heavy Rain</p>
+                  <p class="card-desc">
+                    Continuous rain sounds for total immersion
+                  </p>
+                </div>
+
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/312839/pexels-photo-312839.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="Zen Garden"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">Zen Garden</p>
+                  <p class="card-desc">
+                    Meditation music for inner stillness and peace
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <!-- ===================== SECTION 3: WORKOUT MIX ===================== -->
+            <section class="music-section">
+              <div class="section-header">
+                <h2>Workout Mix</h2>
+                <a href="#" class="show-all">Show all</a>
+              </div>
+              <div class="cards-row">
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="Power Hour"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">Power Hour</p>
+                  <p class="card-desc">
+                    High-BPM tracks to crush your PR goals
+                  </p>
+                </div>
+
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/841130/pexels-photo-841130.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="Beast Mode"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">Beast Mode</p>
+                  <p class="card-desc">
+                    Aggressive hip-hop and metal for heavy lifting
+                  </p>
+                </div>
+
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/2294361/pexels-photo-2294361.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="Running Tempo"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">Running Tempo</p>
+                  <p class="card-desc">
+                    Steady rhythms to keep your pace on the track
+                  </p>
+                </div>
+
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/1032110/pexels-photo-1032110.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="Yoga Flow"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">Yoga Flow</p>
+                  <p class="card-desc">
+                    Calming melodies for your sun salutation
+                  </p>
+                </div>
+
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/1749822/pexels-photo-1749822.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="EDM Cardio"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">EDM Cardio</p>
+                  <p class="card-desc">
+                    Festival bangers that keep the session going
+                  </p>
+                </div>
+
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/31323328/pexels-photo-31323328.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="Hip Hop Workout"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">Hip Hop Workout</p>
+                  <p class="card-desc">Hard-hitting rap to fuel every rep</p>
+                </div>
+
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/6628962/pexels-photo-6628962.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="Pre-Workout Pump"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">Pre-Workout Pump</p>
+                  <p class="card-desc">
+                    Get hyped and ready before you hit the weights
+                  </p>
+                </div>
+
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/3799254/pexels-photo-3799254.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="Cool Down"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">Cool Down</p>
+                  <p class="card-desc">
+                    Gentle acoustics to wind down after training
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <!-- ===================== SECTION 4: JAZZ & SOUL ===================== -->
+            <section class="music-section">
+              <div class="section-header">
+                <h2>Jazz &amp; Soul</h2>
+                <a href="#" class="show-all">Show all</a>
+              </div>
+              <div class="cards-row">
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/2147029/pexels-photo-2147029.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="Midnight Jazz"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">Midnight Jazz</p>
+                  <p class="card-desc">
+                    Smooth saxophone and upright bass essentials
+                  </p>
+                </div>
+
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/210922/pexels-photo-210922.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="Soulful Sundays"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">Soulful Sundays</p>
+                  <p class="card-desc">
+                    Warm, heartfelt vocals and classic soul rhythms
+                  </p>
+                </div>
+
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/164854/pexels-photo-164854.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="Delta Blues"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">Delta Blues</p>
+                  <p class="card-desc">
+                    The gritty, raw origins of American music
+                  </p>
+                </div>
+
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/2531728/pexels-photo-2531728.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="Bossa Nova Chill"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">Bossa Nova Chill</p>
+                  <p class="card-desc">The breezy, romantic sounds of Brazil</p>
+                </div>
+
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/210887/pexels-photo-210887.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="Jazz Standards"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">Jazz Standards</p>
+                  <p class="card-desc">
+                    Timeless tunes every jazz lover needs to know
+                  </p>
+                </div>
+
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/1407322/pexels-photo-1407322.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="Acoustic Soul"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">Acoustic Soul</p>
+                  <p class="card-desc">
+                    Stripped-back soul and folk for a quiet afternoon
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <!-- ===================== SECTION 5: PODCASTS FOR YOU ===================== -->
+            <section class="music-section">
+              <div class="section-header">
+                <h2>Podcasts For You</h2>
+                <a href="#" class="show-all">Show all</a>
+              </div>
+              <div class="cards-row">
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/3391932/pexels-photo-3391932.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="True Crime Weekly"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">True Crime Weekly</p>
+                  <p class="card-desc">
+                    Real stories of mystery, murder, and justice
+                  </p>
+                </div>
+
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/164821/pexels-photo-164821.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="The Daily Deep Dive"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">The Daily Deep Dive</p>
+                  <p class="card-desc">20 minutes. One story. Every morning</p>
+                </div>
+
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/6631412/pexels-photo-6631412.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="The Money Show"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">The Money Show</p>
+                  <p class="card-desc">
+                    Investing, saving, and building real wealth
+                  </p>
+                </div>
+
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/32444934/pexels-photo-32444934.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="Mind & Body"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">Mind &amp; Body</p>
+                  <p class="card-desc">
+                    Mental health, fitness tips, and self-improvement
+                  </p>
+                </div>
+
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/8721344/pexels-photo-8721344.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="Tech Forward"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">Tech Forward</p>
+                  <p class="card-desc">
+                    AI, gadgets, and the future of technology
+                  </p>
+                </div>
+
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/1652361/pexels-photo-1652361.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="Storytellers"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">Storytellers</p>
+                  <p class="card-desc">
+                    Long-form narrative journalism at its finest
+                  </p>
+                </div>
+
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/7013242/pexels-photo-7013242.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="Science Explained"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">Science Explained</p>
+                  <p class="card-desc">
+                    Big ideas made simple, one episode at a time
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <!-- ===================== SECTION 6: NEW RELEASES ===================== -->
+            <section class="music-section">
+              <div class="section-header">
+                <h2>New Releases</h2>
+                <a href="#" class="show-all">Show all</a>
+              </div>
+              <div class="cards-row">
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/9798752/pexels-photo-9798752.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="Future Sounds"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">Future Sounds</p>
+                  <p class="card-desc">
+                    Fresh electronic music from the next generation
+                  </p>
+                </div>
+
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/29388216/pexels-photo-29388216.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="Alternative Rise"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">Alternative Rise</p>
+                  <p class="card-desc">
+                    Brand new alternative and indie releases
+                  </p>
+                </div>
+
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/10613299/pexels-photo-10613299.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="Club Debut"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">Club Debut</p>
+                  <p class="card-desc">
+                    New dance and electronic drops this week
+                  </p>
+                </div>
+
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/2111015/pexels-photo-2111015.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="Mainstage Energy"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">Mainstage Energy</p>
+                  <p class="card-desc">
+                    Festival bangers straight from the main stage
+                  </p>
+                </div>
+
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/28510453/pexels-photo-28510453.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="Modern Psych"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">Modern Psych</p>
+                  <p class="card-desc">
+                    Trippy sounds from the new psychedelic era
+                  </p>
+                </div>
+
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/7991158/pexels-photo-7991158.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="Epic Scores"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">Epic Scores</p>
+                  <p class="card-desc">
+                    Orchestral masterpieces from blockbuster films
+                  </p>
+                </div>
+
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/37052986/pexels-photo-37052986.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="Anime Anthems"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">Anime Anthems</p>
+                  <p class="card-desc">
+                    Your favorite openings and emotional themes
+                  </p>
+                </div>
+
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/20011501/pexels-photo-20011501.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="Sci-Fi Synth"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">Sci-Fi Synth</p>
+                  <p class="card-desc">
+                    Atmospheric electronic music from outer space
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <!-- ===================== SECTION 7: NIGHT DRIVE ===================== -->
+            <section class="music-section">
+              <div class="section-header">
+                <h2>Night Drive</h2>
+                <a href="#" class="show-all">Show all</a>
+              </div>
+              <div class="cards-row">
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/36779364/pexels-photo-36779364.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="City Lights"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">City Lights</p>
+                  <p class="card-desc">
+                    Moody urban soundscapes for a late drive
+                  </p>
+                </div>
+
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/164967/pexels-photo-164967.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="Late Night R&B"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">Late Night R&amp;B</p>
+                  <p class="card-desc">
+                    Mellow bars blended with smooth silky vocals
+                  </p>
+                </div>
+
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/2507007/pexels-photo-2507007.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="Synthwave Cruise"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">Synthwave Cruise</p>
+                  <p class="card-desc">
+                    Retro-futuristic synths for the highway at 2am
+                  </p>
+                </div>
+
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/34277706/pexels-photo-34277706.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="Bedroom Pop"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">Bedroom Pop</p>
+                  <p class="card-desc">
+                    Intimate lo-fi pop for quiet evenings alone
+                  </p>
+                </div>
+
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/36092398/pexels-photo-36092398.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="Vinyl Night"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">Vinyl Night</p>
+                  <p class="card-desc">
+                    The warmth of analog for your late night session
+                  </p>
+                </div>
+
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/7557528/pexels-photo-7557528.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="Rainy Evening"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">Rainy Evening</p>
+                  <p class="card-desc">
+                    Storm sounds and chill beats for rainy nights
+                  </p>
+                </div>
+
+                <div class="card">
+                  <div class="card-img-wrap">
+                    <img
+                      class="card-img"
+                      src="https://images.pexels.com/photos/1699161/pexels-photo-1699161.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop"
+                      alt="Neo-Noir Vibes"
+                    />
+                    <button class="card-play-btn">
+                      <i class="fa-solid fa-play"></i>
+                    </button>
+                  </div>
+                  <p class="card-title">Neo-Noir Vibes</p>
+                  <p class="card-desc">
+                    Moody, dark soundtracks for rainy night drives
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <!-- Footer spacer -->
+            <div style="height: 32px"></div>
+          </div>
+          <!-- /content-area -->
+        </main>
+        <!-- /MAIN -->
+      </div>
+      <!-- /APP BODY -->
+
+      <!-- ======== PLAYER BAR ======== -->
+      <div class="player-bar">
+        <!-- Now Playing (left) -->
+        <div class="now-playing">
+          <img
+            class="np-img"
+            src="https://images.pexels.com/photos/13178081/pexels-photo-13178081.jpeg?auto=compress&cs=tinysrgb&w=56&h=56&fit=crop"
+            alt="Now Playing"
+          />
+          <div class="np-info">
+            <div class="np-title">Take My Hand</div>
+            <div class="np-artist">David Leonard</div>
+          </div>
+          <div class="np-actions">
+            <!-- Like toggle -->
+            <label
+              for="like-toggle"
+              class="np-btn like-label"
+              title="Save to Your Liked Songs"
+            >
+              <i class="heart-off fa-regular fa-heart"></i>
+              <i class="heart-on fa-solid fa-heart"></i>
+            </label>
+            <!-- PiP toggle -->
+            <label
+              for="pip-toggle"
+              class="np-btn pip pip-label"
+              title="Enable pip view"
+            >
+              <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
+            </label>
+          </div>
+        </div>
+
+        <!-- Player Controls (center) -->
+        <div class="player-controls">
+          <div class="controls-row">
+            <!-- Shuffle -->
+            <label
+              for="shuffle-toggle"
+              class="ctrl-btn shuffle-label"
+              title="Enable shuffle"
+            >
+              <i class="fa-solid fa-shuffle"></i>
+            </label>
+            <button class="ctrl-btn" title="Previous">
+              <i class="fa-solid fa-backward-step"></i>
+            </button>
+            <!-- Play / Pause -->
+            <label
+              for="play-toggle"
+              class="play-pause-btn"
+              title="Play / Pause"
+            >
+              <i class="play-icon fa-solid fa-play"></i>
+              <i class="pause-icon fa-solid fa-pause"></i>
+            </label>
+            <button class="ctrl-btn" title="Next">
+              <i class="fa-solid fa-forward-step"></i>
+            </button>
+            <!-- Repeat -->
+            <label
+              for="repeat-toggle"
+              class="ctrl-btn repeat-label"
+              title="Enable repeat"
+            >
+              <i class="fa-solid fa-repeat"></i>
+            </label>
+          </div>
+          <div class="progress-row">
+            <span class="time-txt">0:54</span>
+            <div class="progress-track">
+              <div class="progress-fill"></div>
+              <div class="progress-thumb"></div>
+            </div>
+            <span class="time-txt end">4:30</span>
+          </div>
+        </div>
+
+        <!-- Extra Controls (right) -->
+        <div class="player-extra">
+          <label
+            for="nav-bars"
+            class="extra-btn nav-bars-label"
+            title="Now Playing view"
+          >
+            <i class="fa-solid fa-bars-staggered"></i>
+          </label>
+          <label for="nav-mic" class="extra-btn nav-mic-label" title="Lyrics">
+            <i class="fa-solid fa-microphone"></i>
+          </label>
+          <label
+            for="nav-queue"
+            class="extra-btn nav-queue-label"
+            title="Queue"
+          >
+            <i class="fa-regular fa-square-caret-right"></i>
+          </label>
+          <label
+            for="nav-device"
+            class="extra-btn nav-device-label"
+            title="Connect to a device"
+          >
+            <i class="fa-solid fa-computer"></i>
+          </label>
+          <div class="volume-row">
+            <!-- Mute toggle -->
+            <label for="mute-toggle" class="extra-btn mute-label" title="Mute">
+              <i class="vol-on-icon fa-solid fa-volume-high"></i>
+              <i class="vol-off-icon fa-solid fa-volume-xmark"></i>
+            </label>
+            <div class="volume-track">
+              <div class="volume-fill"></div>
+              <div class="volume-thumb"></div>
+            </div>
+          </div>
+          <label
+            for="nav-fs"
+            class="extra-btn nav-fs-label"
+            title="Full screen"
+          >
+            <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
+          </label>
+        </div>
+      </div>
+      <!-- /PLAYER BAR -->
+
+      <!-- Mobile Bottom Nav -->
+      <nav class="mobile-bottom-nav">
+        <div class="mob-nav-items">
+          <label for="mn-home" class="mob-nav-item">
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+          </label>
+          <label for="mn-search" class="mob-nav-item">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span>Search</span>
+          </label>
+          <label for="mn-library" class="mob-nav-item">
+            <i class="fa-solid fa-layer-group"></i>
+            <span>Your Library</span>
+          </label>
+        </div>
+      </nav>
+    </div>
+    <!-- /APP -->
+  </body>
+</html>
